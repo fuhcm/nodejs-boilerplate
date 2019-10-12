@@ -1,22 +1,15 @@
-const errorHandler = fn => (req, res, next) => {
-  const routePromise = fn(req, res, next);
-  routePromise.catch && routePromise.catch(err => next(err));
-};
+const errorHandler = fn => (req, res, next) =>
+  fn(req, res, next).catch && fn(req, res, next).catch(err => next(err));
 
 const addErrorHandlerWrapper = handlers => {
-  const createWrapper = (key, handler) => ({
+  const handlersArr = Object.keys(handlers).map(key => ({
     key: key,
-    value: errorHandler(handler)
-  });
+    value: errorHandler(handlers[key])
+  }));
 
-  const handlersArr = Object.keys(handlers).map(key =>
-    createWrapper(key, handlers[key])
-  );
-
-  const initialObj = Object.create(null);
   const wrappedHandlers = handlersArr.reduce(
     (obj, item) => ((obj[item.key] = item.value), obj),
-    initialObj
+    Object.create(null)
   );
 
   return wrappedHandlers;
