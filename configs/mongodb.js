@@ -4,7 +4,7 @@ const dbName = "nodejs";
 
 let _db = null;
 
-async function initDB() {
+const initDB = async () => {
   try {
     client = await MongoClient.connect(url, {
       useNewUrlParser: true,
@@ -16,14 +16,10 @@ async function initDB() {
   } catch (err) {
     throw err;
   }
-}
+};
 
-function getDB() {
-  return _db || new Error("Connect to DB failed!");
-}
+const getDB = () => _db || new Error("Connect to DB failed!");
 
-function closeDB() {
-  return _db.close();
-}
+const closeDB = () => _db.close();
 
 module.exports = { getDB, initDB, closeDB };

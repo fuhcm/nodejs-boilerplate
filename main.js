@@ -9,9 +9,7 @@ const main = async () => {
     await initDB();
     const server = app.createServer();
     const port = process.env.PORT || 5000;
-    server.listen(port, () =>
-      console.log(`Example app listening on port ${port}!`)
-    );
+    server.listen(port, () => console.log(`Server listening on port ${port}!`));
   } catch (err) {
     console.error(err);
     process.exit(1);
