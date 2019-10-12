@@ -4,7 +4,7 @@ require("dotenv").config();
 const app = require("server/app");
 const initDB = require("configs/mongodb").initDB;
 
-async function main() {
+const main = async () => {
   try {
     await initDB();
     const server = app.createServer();
@@ -16,6 +16,6 @@ async function main() {
     console.error(err);
     process.exit(1);
   }
-}
+};
 
 main();

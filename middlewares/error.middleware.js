@@ -1,5 +1,5 @@
-function errorMiddleware(err, _, res, next) {
-  function handleError(res) {
+const errorMiddleware = (err, _, res, next) => {
+  const handleError = res => {
     const isDevelopment = process.env.ENVIRONMENT !== "production";
 
     const errorResponse = {
@@ -12,11 +12,9 @@ function errorMiddleware(err, _, res, next) {
     };
 
     res.status(400).send(isDevelopment ? errorResponse : hiddenError);
-
-    return false;
-  }
+  };
 
   return err ? handleError(res) : next();
-}
+};
 
 module.exports = errorMiddleware;

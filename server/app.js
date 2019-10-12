@@ -1,12 +1,12 @@
-function createServer(app, beginMiddlewares, routes, endMiddlewares) {
+const createServer = (app, beginMiddlewares, routes, endMiddlewares) => {
   app.use(beginMiddlewares);
   app.use("/api/v1", routes);
   app.use(endMiddlewares);
 
   return app;
-}
+};
 
-function createServerWrapper() {
+const createServerWrapper = () => {
   const app = require("express")();
   const routes = require("server/route");
   const corsMiddleware = require("middlewares/cors.middleware");
@@ -21,11 +21,12 @@ function createServerWrapper() {
     bodyParseUrl,
     bodyParseJson
   ];
+
   const endMiddlewares = [errorMiddleware];
 
   const server = createServer(app, beginMiddlewares, routes, endMiddlewares);
 
   return server;
-}
+};
 
 module.exports.createServer = createServerWrapper;

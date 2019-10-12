@@ -2,8 +2,8 @@ const jwt = require("jsonwebtoken");
 
 const secret = process.env.JWT_SECRET || "DEFAULT_SECRET";
 
-function createJWT(identify, obj) {
-  return jwt.sign(
+const createJWT = (identify, obj) =>
+  jwt.sign(
     {
       ...obj,
       identify
@@ -11,10 +11,7 @@ function createJWT(identify, obj) {
     secret,
     { expiresIn: "24h" }
   );
-}
 
-function verifyJWT(token) {
-  return jwt.verify(token, secret);
-}
+const verifyJWT = token => jwt.verify(token, secret);
 
 module.exports = { createJWT, verifyJWT };

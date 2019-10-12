@@ -1,17 +1,13 @@
-function errorHandler(fn) {
-  return (req, res, next) => {
-    const routePromise = fn(req, res, next);
-    routePromise.catch && routePromise.catch(err => next(err));
-  };
-}
+const errorHandler = fn => (req, res, next) => {
+  const routePromise = fn(req, res, next);
+  routePromise.catch && routePromise.catch(err => next(err));
+};
 
-function addErrorHandlerWrapper(handlers) {
-  function createWrapper(key, handler) {
-    return {
-      key: key,
-      value: errorHandler(handler)
-    };
-  }
+const addErrorHandlerWrapper = handlers => {
+  const createWrapper = (key, handler) => ({
+    key: key,
+    value: errorHandler(handler)
+  });
 
   const handlersArr = Object.keys(handlers).map(key =>
     createWrapper(key, handlers[key])
@@ -24,6 +20,6 @@ function addErrorHandlerWrapper(handlers) {
   );
 
   return wrappedHandlers;
-}
+};
 
 module.exports = addErrorHandlerWrapper;
